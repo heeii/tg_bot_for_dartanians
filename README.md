@@ -1,4 +1,4 @@
-# Телеграм бот
+# Описание всех файлов бота
 
 # tg_bot.py
 В файле "tg_bot.py" находится функция 'bot_commands' с декоратором 'message_handler' принимающим команды: /start, /help, /site, /gpt, /timetable, /inside, /stop
