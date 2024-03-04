@@ -14,7 +14,7 @@ def bot_commands(command):
     role = bot.get_chat_member(command.chat.id, command.from_user.id).status
     command_request = util.extract_command(command.text)
 
-    logging(command.from_user.username, command_request, 'config')
+    logging(command.from_user.username, command_request)
 
     if command_request == 'start':
         bot.send_message(command.chat.id, "Напиши /help для получения информации о моих командах")
