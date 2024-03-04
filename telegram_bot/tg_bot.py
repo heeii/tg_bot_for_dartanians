@@ -1,31 +1,36 @@
 import telebot
 import telebot.util as util
-# import time
-import telegram_bot.chatgpt_api as chatgpt
+import time
+import chatgpt_api as chatgpt
+from system_func import *
 
-token = '6609693380:AAF56yGszmmChFfGniQtPNO5OiSNlJHC4WQ'
-bot = telebot.TeleBot(token)
+_token = parse('GaryToken')
+bot = telebot.TeleBot(_token)
+_log = parse(name='log')
 
 
 @bot.message_handler(commands=['start', 'help', 'site', 'gpt', 'timetable', 'inside', 'stop'])
 def bot_commands(command):
     role = bot.get_chat_member(command.chat.id, command.from_user.id).status
+    command_request = util.extract_command(command.text)
 
-    if util.extract_command(command.text) == 'start':
+    logging(command.from_user.username, command_request, 'config')
+
+    if command_request == 'start':
         bot.send_message(command.chat.id, "Напиши /help для получения информации о моих командах")
-    elif util.extract_command(command.text) == 'help':
+    elif command_request == 'help':
         bot.send_message(command.chat.id, "/help - справка\n/site - для перехода на сайт"
-        "(в разработке)\n/gpt *** - запрос в ChatGPT\n/timetable - расписание занятий(в разработке)"
-        "\n/inside - поиск внутри группы(в разработке)\n/stop - для остановки бота")
-    elif util.extract_command(command.text) == 'site':
+                                          " (в разработке)\n/gpt *** - запрос в ChatGPT\n/timetable - расписание занятий (в разработке)"
+                                          "\n/inside - поиск внутри группы (в разработке)\n/stop - для остановки бота")
+    elif command_request == 'site':
         bot.send_message(command.chat.id, "СКАЗАНО ЖЕ БЛЯТЬ 'site' В РАЗРАБОТКЕ")
-    elif util.extract_command(command.text) == 'gpt':
+    elif command_request == 'gpt':
         bot.send_message(command.chat.id, chatgpt.something())
-    elif util.extract_command(command.text) == 'timetable':
+    elif command_request == 'timetable':
         bot.send_message(command.chat.id, "СКАЗАНО ЖЕ БЛЯТЬ 'timetable' В РАЗРАБОТКЕ")
-    elif util.extract_command(command.text) == 'inside':
+    elif command_request == 'inside':
         bot.send_message(command.chat.id, "СКАЗАНО ЖЕ БЛЯТЬ 'inside' В РАЗРАБОТКЕ")
-    elif util.extract_command(command.text) == 'stop':
+    elif command_request == 'stop':
         print(role)
         print(command.chat.type)
         if role in ['administrator',
@@ -47,14 +52,17 @@ def bot_commands(command):
 #         bot.send_message(message.chat.id, "Помощь нужна?")
 #         time.sleep(3)
 #         bot.send_message(message.chat.id, "/start пиши, хуль сидишь")
+
+
+
 start = telebot.types.BotCommand('/start', "начать общение")
-help = telebot.types.BotCommand('/help', "список команд")
+help_ = telebot.types.BotCommand('/help', "список команд")
 site = telebot.types.BotCommand('/site', "открыть сайт")
 gpt = telebot.types.BotCommand('/gpt', "поиск в ChatGPT")
 timetable = telebot.types.BotCommand('/timetable', "расписание МГТУ")
 inside = telebot.types.BotCommand('inside', "поиск внутри группы")
 stop = telebot.types.BotCommand('stop', "остановить бота можно с правами администратора и выше")
 
-bot.set_my_commands([start, help, site, gpt, timetable, inside, stop])
+bot.set_my_commands([start, help_, site, gpt, timetable, inside, stop])
 
 bot.infinity_polling()

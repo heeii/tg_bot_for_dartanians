@@ -1,0 +1,5 @@
+start logging
+[2024-03-04 T 12:01:49] @Lihtt |send /start|
+[2024-03-04 T 12:01:54] @Lihtt |send /help|
+[2024-03-04 T 12:01:58] @Lihtt |send /gpt|
+[2024-03-04 T 12:02:04] @Lihtt |send /stop|
