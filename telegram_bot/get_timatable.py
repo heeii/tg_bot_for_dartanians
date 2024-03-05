@@ -2,7 +2,7 @@ import json
 import requests
 
 
-with open('setings.json', 'r') as f:
+with open('config.json', 'r') as f:
     config = json.load(f)
 
 
