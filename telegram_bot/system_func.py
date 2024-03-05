@@ -1,8 +1,9 @@
 import warnings
 import time
+import json
 
 
-def parse(key: str = None, name: str = 'config', extention: str = 'txt') -> str or dict[str, str]:
+def parse(key: str = None, *, name: str = 'config', extention: str = 'txt') -> str or dict[str, str]:
     file = open(f'{name}.{extention}').readlines()
     key_symb = '"'
     dict = {}
@@ -36,6 +37,19 @@ def parse(key: str = None, name: str = 'config', extention: str = 'txt') -> str 
         return dict
 
 
+def jparse(key: str = None, *, name: str = 'config') -> str or dict[str, str]:
+    with open(f'{name}.json', 'r') as file:
+        dict = json.load(file)
+        if key is not None:
+            try:
+                return dict[key]
+            except:
+                warnings.warn("\n\n\tNo element with such key in file\n\tentire dictionary will be returned\n")
+                return dict
+        else:
+            return dict
+
+
 def __timestamp__() -> str:
     current_time = ''
     c = 0
@@ -63,21 +77,21 @@ def __timestamp__() -> str:
     return current_time[:-1]
 
 
-def logging(tg_id, action, path: str = 'log', extention: str = 'txt'):
+def logging(tg_id, action, *, path: str = 'log', extention: str = 'txt'):
     with open(f'{path}.{extention}', 'a') as file:
         file.writelines(f"\n[{__timestamp__()}] @{tg_id} |send /{action}|")
         file.flush()
         file.close()
 
 
-def show(path: str = 'log', extention: str = 'txt'):
+def show(*, path: str = 'log', extention: str = 'txt'):
     with open(f'{path}.{extention}', 'r') as file:
         lines = file.readlines()
         print(lines)
         file.close()
 
 
-def __clear__(path: str = 'log', extention: str = 'txt'):
+def __clear__(*, path: str = 'log', extention: str = 'txt'):
     with open(f'{path}.{extention}', 'a') as file:
         try:
             warnings.warn(
@@ -91,3 +105,8 @@ def __clear__(path: str = 'log', extention: str = 'txt'):
         finally:
             file.flush()
             file.close()
+
+# def jinsert():
+#     with open('log.json', 'a') as w_file:
+#         data = {17: 15, 12: 9, 11: 4}
+#         json.dump(data, w_file)
