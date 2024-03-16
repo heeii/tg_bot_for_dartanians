@@ -1,3 +1,0 @@
-"GaryToken": "6609693380:AAF56yGszmmChFfGniQtPNO5OiSNlJHC4WQ",
-"speechrecognitionbotToken": "smartspeech_sber_bot",
-"timetable": "https://timetable.magtu.ru/%D0%90%D0%98%D0%91-23-2"
